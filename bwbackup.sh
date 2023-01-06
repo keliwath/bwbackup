@@ -59,7 +59,6 @@ if [[ $(bw status | jq -r .status) == "unauthenticated" ]]
 then 
     >&2 echo "ERROR: Failed to authenticate!"
     cleanup
-    echo
     exit 1
 fi
 
@@ -71,20 +70,20 @@ unset BW_CLIENTSECRET
 unset BW_MASTER
 
 #Verify that unlock succeeded
-if [[ $BW_SESSION == "" ]]
+if [ -z "$BW_SESSION" ]
 then 
     >&2 echo "ERROR: Failed to unlock!"
     cleanup
     exit 1
 else
-    echo "Login successful!"
+    echo "Logged in!"
 fi
 
 export BW_SESSION
 
-#Export the personal vault 
+#Export the vault 
 echo
-echo "Exporting personal vault..."
+echo "Exporting vault..."
 bw export --format json --output $SAVE_FOLDER
 
 #Download all attachments (file backup)
@@ -119,4 +118,4 @@ echo "Cleaning up..."
 cleanup
 
 echo
-echo "Backup complete."
+echo "Backup complete =)"
