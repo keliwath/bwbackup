@@ -110,6 +110,7 @@ echo "Starting import..."
 if echo "$KP_PASS" | keepassxc-cli attachment-import -f -y 2 ~/codes.kdbx bw export.tar.gz export.tar.gz; 
 then
     rm export.tar.gz 
+    cp ~/codes.kdbx ~/Library/Mobile\ Documents/com~apple~CloudDocs/
 fi
 
 echo
