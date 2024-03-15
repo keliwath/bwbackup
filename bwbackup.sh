@@ -107,11 +107,18 @@ tar -zcf export.tar.gz $SAVE_FOLDER
 echo
 echo "Starting import..."
 
-if echo "$KP_PASS" | keepassxc-cli attachment-import -f -y 2 ~/codes.kdbx bw export.tar.gz export.tar.gz; 
+if echo "$KP_PASS" | keepassxc-cli attachment-import -f -y 2:serial ~/codes.kdbx bw export.tar.gz export.tar.gz; 
 then
+    echo "Imported!"
     rm export.tar.gz 
+    rclone sync ~/codes.kdbx drop:
     cp ~/codes.kdbx ~/Library/Mobile\ Documents/com~apple~CloudDocs/
+else 
+    >&2 echo "ERROR: Failed to import into Keepass!"
+    cleanup 
+    exit 1 
 fi
+
 
 echo
 echo "Cleaning up..."
